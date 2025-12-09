@@ -37,6 +37,19 @@ func executeNotBuiltInCommand(command string, args []string) {
 	}
 }
 
+func executeCdCommand(args []string) {
+	var path string
+	if len(args) == 0 {
+		path, _ = os.Getwd()
+	} else {
+		path = args[0]
+	}
+	err := os.Chdir(path)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+
 func main() {
 
 	// read a line of input from the user
@@ -55,6 +68,8 @@ func main() {
 			continue
 		case "exit":
 			os.Exit(0)
+		case "cd":
+			executeCdCommand(args)
 		default:
 			executeNotBuiltInCommand(command, args)
 		}
